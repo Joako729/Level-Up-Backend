@@ -12,9 +12,17 @@ data class Producto(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
+    // CAMPOS EXISTENTES
     val nombre: String,
-
     val precio: Double,
+    val descripcion: String?, // El signo de interrogación indica que el campo puede ser nulo
 
-    val descripcion: String? // El signo de interrogación indica que el campo puede ser nulo
+    // NUEVOS CAMPOS A AGREGAR
+    val codigo: String,
+    val categoria: String,
+    val stock: Int,
+    val valoracion: Float,
+    val urlImagen: String,
+    val fabricante: String,
+    val destacado: Boolean
 )
