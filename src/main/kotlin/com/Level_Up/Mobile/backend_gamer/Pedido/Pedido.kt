@@ -2,7 +2,6 @@ package com.Level_Up.Mobile.backend_gamer.Pedido
 
 import jakarta.persistence.*
 
-// Mapeado a la tabla 'pedido' en PostgreSQL
 @Entity
 @Table(name = "pedido")
 data class Pedido(
@@ -13,18 +12,15 @@ data class Pedido(
     @Column(nullable = false)
     val usuarioId: Long,
 
-    // <<-- CAMBIOS TEMPORALES: SE ELIMINÓ @Column(nullable = false) -->>
     val montoTotal: Int,
     val montoDescuento: Int,
     val montoFinal: Int,
-    // <<-- FIN CAMBIOS TEMPORALES -->>
 
     @Column(nullable = false)
-    val estado: String, // 'pending', 'completed', 'cancelled'
+    val estado: String,
 
-    // <<-- CAMBIOS TEMPORALES: SE ELIMINÓ @Column(nullable = false) -->>
-    val fechaCreacion: Long, // Timestamp
+    val fechaCreacion: Long,
 
-    @Column(columnDefinition = "TEXT") // SE ELIMINÓ nullable = false
-    val itemsJson: String // JSON o String serializado de los ítems
+    @Column(columnDefinition = "TEXT")
+    val itemsJson: String
 )

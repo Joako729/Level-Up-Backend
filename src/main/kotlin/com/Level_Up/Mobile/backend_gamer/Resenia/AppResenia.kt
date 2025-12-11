@@ -1,8 +1,7 @@
-package com.Level_Up.Mobile.backend_gamer.AppResenia // Nuevo Paquete
+package com.Level_Up.Mobile.backend_gamer.AppResenia
 
 import jakarta.persistence.*
 
-// Mapeado a la tabla 'app_resenia'
 @Entity
 @Table(name = "app_resenia")
 data class AppResenia(
@@ -23,5 +22,5 @@ data class AppResenia(
     val comentario: String,
 
     @Column(nullable = false)
-    val fechaCreacion: Long // Timestamp
+    val fechaCreacion: Long
 )

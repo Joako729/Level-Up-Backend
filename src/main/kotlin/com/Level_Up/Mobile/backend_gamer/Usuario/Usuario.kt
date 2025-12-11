@@ -2,7 +2,6 @@ package com.Level_Up.Mobile.backend_gamer.Usuario
 
 import jakarta.persistence.*
 
-// Mapeado a la tabla 'Usuario' en PostgreSQL
 @Entity
 @Table(name = "usuario")
 data class Usuario(

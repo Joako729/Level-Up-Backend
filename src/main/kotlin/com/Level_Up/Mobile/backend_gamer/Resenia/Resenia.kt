@@ -25,5 +25,5 @@ data class Resenia(
     val comentario: String,
 
     @Column(nullable = false)
-    val fechaCreacion: Long // Timestamp
+    val fechaCreacion: Long
 )

@@ -5,24 +5,48 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/pedidos") // Ruta base: http://localhost:8080/api/pedidos
+@RequestMapping("/api/pedidos")
 class PedidoController(private val repository: PedidoRepository) {
 
-    // 1. ENDPOINT DE CREACIÓN DE PEDIDO: POST /api/pedidos
-    @PostMapping
-    fun crearNuevoPedido(@RequestBody nuevoPedido: Pedido): ResponseEntity<Pedido> {
-        // En este punto, Spring Boot y Hibernate validarán automáticamente que los campos
-        // marcados como 'nullable = false' lleguen en el cuerpo del JSON.
-
-        val pedidoGuardado = repository.save(nuevoPedido)
-
-        // 201 Created: El pedido fue guardado exitosamente.
-        return ResponseEntity.status(HttpStatus.CREATED).body(pedidoGuardado)
-    }
-
-    // 2. ENDPOINT ADICIONAL: GET /api/pedidos (Para propósitos de prueba/admin)
     @GetMapping
     fun obtenerTodosLosPedidos(): List<Pedido> {
         return repository.findAll()
+    }
+
+    @GetMapping("/{id}")
+    fun obtenerPedidoPorId(@PathVariable id: Long): ResponseEntity<Pedido> {
+        val pedido = repository.findById(id)
+        return if (pedido.isPresent) {
+            ResponseEntity.ok(pedido.get())
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PostMapping
+    fun crearNuevoPedido(@RequestBody nuevoPedido: Pedido): ResponseEntity<Pedido> {
+        val pedidoGuardado = repository.save(nuevoPedido)
+        return ResponseEntity.status(HttpStatus.CREATED).body(pedidoGuardado)
+    }
+
+    @PutMapping("/{id}")
+    fun actualizarPedido(@PathVariable id: Long, @RequestBody pedidoActualizado: Pedido): ResponseEntity<Pedido> {
+        return if (repository.existsById(id)) {
+            val pedidoAGuardar = pedidoActualizado.copy(id = id)
+            val pedidoGuardado = repository.save(pedidoAGuardar)
+            ResponseEntity.ok(pedidoGuardado)
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    fun eliminarPedido(@PathVariable id: Long): ResponseEntity<Void> {
+        return if (repository.existsById(id)) {
+            repository.deleteById(id)
+            ResponseEntity.noContent().build()
+        } else {
+            ResponseEntity.notFound().build()
+        }
     }
 }
